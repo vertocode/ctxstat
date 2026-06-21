@@ -20,13 +20,6 @@ Start a Claude Code session — the statusline appears automatically.
 
 ![ctxstat screenshot](screenshot.png)
 
-```
-Claude Sonnet 4.6 │ ✍️  66k 33% (Smart) │ myproject (main) │ ⏱ 12m │ ◑ default
-
-current ●●●○○○○○○○  28% ⟳ 3:45pm
-weekly  ●●○○○○○○○○  18% ⟳ jun 27, 9:00am
-```
-
 - **Model** — display name from Claude Code
 - **Tokens + %** — current context usage, color-coded by zone
 - **Zone label** — Smart / Watch / Caution / Dumb
