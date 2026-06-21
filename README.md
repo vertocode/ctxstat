@@ -20,37 +20,48 @@ Start a Claude Code session — the statusline appears automatically.
 
 ![ctxstat screenshot](screenshot.png)
 
+**Row 1** — Model · Tokens/% (Zone) context bar · ~Cost · Effort · Plan
+
+**Row 2** — Directory (branch\*) +additions -deletions
+
+**Row 3** — Session duration · Session ID
+
+**Row 4** — Rate limits: current and weekly bars with reset times (requires Claude.ai OAuth)
+
+---
+
 - **Model** — display name from Claude Code
-- **Tokens + %** — current context usage, color-coded by zone
-- **Zone label** — Smart / Watch / Caution / Dumb
-- **~Cost** — estimated session cost based on input tokens and model pricing
-- **Git branch** — with dirty indicator `*`
+- **Tokens / %** — context usage with visual bar, color-coded by zone
+- **Zone** — Smart / Watch / Caution / Dumb
+- **~Cost** — estimated input cost based on model pricing (Sonnet, Opus, Haiku, Fable)
+- **Effort** — current effort level (▽ low / ◆ default / ▲ high)
+- **Plan** — detected plan: Teams / Max / Pro / API
+- **Git diff stat** — `+N -N` lines changed vs HEAD (green/red), only shown when in a git repo with changes
 - **Session duration** — time since session start
-- **Effort level** — from `~/.claude/settings.json`
-- **Rate limits** — 5-hour and 7-day utilization bars (requires Claude.ai OAuth)
-- **Extra usage cost** — credit spending vs monthly limit (requires plan with extra usage)
+- **Rate limits** — current (5h) and weekly bars with reset times (Claude.ai OAuth only)
+- **Extra usage** — credit spending vs monthly limit (Max plan with overage enabled)
 
 ## Zones
 
-| Zone    | Range  | Color  |
-|---------|--------|--------|
-| Smart   | 0–39%  | Green  |
-| Watch   | 40–59% | Orange |
-| Caution | 60–79% | Yellow |
-| Dumb    | 80–100%| Red    |
+| Zone    | Range   | Color  |
+|---------|---------|--------|
+| Smart   | 0–39%   | Green  |
+| Watch   | 40–59%  | Orange |
+| Caution | 60–79%  | Yellow |
+| Dumb    | 80–100% | Red    |
 
 ## Requirements
 
 - `bash` (macOS or Linux)
 - `jq` — JSON parsing (`brew install jq` / `apt install jq`)
-- `curl` — for rate limit data (optional)
+- `curl` — for rate limit and plan data (optional)
 - Claude Code CLI
 
-## Rate limits
+## Rate limits & plan
 
-Rate limit bars (current / weekly) fetch from the Anthropic OAuth usage API. They appear automatically if you're logged in via Claude.ai OAuth. No API key needed.
+Rate limits and plan detection fetch from the Anthropic OAuth usage API. They appear automatically if you're logged in via Claude.ai OAuth. No API key needed.
 
-Data is cached for 60 seconds in `/tmp/claude/statusline-usage-cache.json`.
+Data is cached for 60 seconds in `/tmp/claude/ctxstat-cache.json`.
 
 ## Model compatibility
 
@@ -58,11 +69,12 @@ Works with any Claude Code session. Context window size comes directly from Clau
 
 ## Customization
 
-Colors, thresholds, and zone names are defined at the top of `statusline.sh`:
+Colors, thresholds, and zone names are defined in `statusline.sh`:
 
-- `color_for_pct()` — returns ANSI color by zone
-- `zone_label()` — returns Smart / Watch / Caution / Dumb
-- Bar width: `bar_width=10` in the rate limits section
+- `zone_color()` — ANSI color by zone name
+- `zone_name()` — returns Smart / Watch / Caution / Dumb
+- `session_cost()` — per-model pricing for cost estimate
+- Bar width: `bw=8` in the rate limits section
 
 ## License
 
