@@ -28,8 +28,6 @@ if ! command -v jq &>/dev/null; then
 fi
 
 # 4. Patch settings.json
-STATUS_LINE_VALUE="bash \"\$HOME/.claude/statusline.sh\""
-
 if [ ! -f "$SETTINGS" ]; then
     echo "Creating $SETTINGS..."
     echo "{}" > "$SETTINGS"
@@ -41,7 +39,7 @@ if [ -n "$existing" ]; then
 else
     echo "Adding statusLine to settings.json..."
     tmp=$(mktemp)
-    jq --arg v "$STATUS_LINE_VALUE" '. + {statusLine: $v}' "$SETTINGS" > "$tmp" && mv "$tmp" "$SETTINGS"
+    jq '. + {statusLine: {type: "command", command: "bash \"$HOME/.claude/statusline.sh\""}}' "$SETTINGS" > "$tmp" && mv "$tmp" "$SETTINGS"
     echo "  -> statusLine configured"
 fi
 
