@@ -23,10 +23,12 @@ Start a Claude Code session — the statusline appears automatically.
 - **Model** — display name from Claude Code
 - **Tokens + %** — current context usage, color-coded by zone
 - **Zone label** — Smart / Watch / Caution / Dumb
+- **~Cost** — estimated session cost based on input tokens and model pricing
 - **Git branch** — with dirty indicator `*`
 - **Session duration** — time since session start
 - **Effort level** — from `~/.claude/settings.json`
 - **Rate limits** — 5-hour and 7-day utilization bars (requires Claude.ai OAuth)
+- **Extra usage cost** — credit spending vs monthly limit (requires plan with extra usage)
 
 ## Zones
 
