@@ -6,7 +6,19 @@ Real-time context health for Claude Code. Know when you're in the smart zone —
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-statusLine-orange)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 
+## Install
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/vertocode/ctxstat/main/install.sh | bash
+```
+
+That's it. The installer downloads `statusline.sh`, makes it executable, and wires up `~/.claude/settings.json` automatically.
+
+Start a Claude Code session — the statusline appears automatically.
+
 ## What it shows
+
+![ctxstat screenshot](screenshot.png)
 
 ```
 Claude Sonnet 4.6 │ ✍️  66k 33% (Smart) │ myproject (main) │ ⏱ 12m │ ◑ default
@@ -31,16 +43,6 @@ weekly  ●●○○○○○○○○  18% ⟳ jun 27, 9:00am
 | Watch   | 40–59% | Orange |
 | Caution | 60–79% | Yellow |
 | Dumb    | 80–100%| Red    |
-
-## Install
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/vertocode/ctxstat/main/install.sh | bash
-```
-
-That's it. The installer downloads `statusline.sh`, makes it executable, and wires up `~/.claude/settings.json` automatically.
-
-Start a Claude Code session — the statusline appears automatically.
 
 ## Requirements
 
