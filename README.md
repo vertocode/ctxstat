@@ -34,22 +34,26 @@ weekly  ●●○○○○○○○○  18% ⟳ jun 27, 9:00am
 
 ## Install
 
-**1. Copy the script:**
-
 ```sh
-cp statusline.sh ~/.claude/statusline.sh
-chmod +x ~/.claude/statusline.sh
+curl -fsSL https://raw.githubusercontent.com/vertocode/ctxstat/main/install.sh | bash
 ```
 
-**2. Add to `~/.claude/settings.json`:**
+That's it. The installer downloads `statusline.sh`, makes it executable, and wires up `~/.claude/settings.json` automatically.
 
-```json
+**Manual install (optional):**
+
+```sh
+# 1. Copy script
+cp statusline.sh ~/.claude/statusline.sh
+chmod +x ~/.claude/statusline.sh
+
+# 2. Add to ~/.claude/settings.json
 {
   "statusLine": "bash \"$HOME/.claude/statusline.sh\""
 }
 ```
 
-**3. Start a Claude Code session** — the statusline appears automatically.
+Start a Claude Code session — the statusline appears automatically.
 
 ## Requirements
 
