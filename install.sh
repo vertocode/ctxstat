@@ -28,19 +28,39 @@ if ! command -v jq &>/dev/null; then
 fi
 
 # 4. Patch settings.json
+TARGET_CMD='bash "$HOME/.claude/statusline.sh"'
+
 if [ ! -f "$SETTINGS" ]; then
     echo "Creating $SETTINGS..."
     echo "{}" > "$SETTINGS"
 fi
 
-existing=$(jq -r '.statusLine // empty' "$SETTINGS" 2>/dev/null)
-if [ -n "$existing" ]; then
-    echo "statusLine already set in settings.json — skipping."
-else
-    echo "Adding statusLine to settings.json..."
+set_statusline() {
     tmp=$(mktemp)
     jq '. + {statusLine: {type: "command", command: "bash \"$HOME/.claude/statusline.sh\""}}' "$SETTINGS" > "$tmp" && mv "$tmp" "$SETTINGS"
     echo "  -> statusLine configured"
+}
+
+existing_cmd=$(jq -r '.statusLine.command // .statusLine // empty' "$SETTINGS" 2>/dev/null)
+
+if [ -z "$existing_cmd" ]; then
+    echo "Adding statusLine to settings.json..."
+    set_statusline
+elif [ "$existing_cmd" = "$TARGET_CMD" ]; then
+    echo "statusLine already configured with ctxstat — nothing to do."
+else
+    echo ""
+    echo "statusLine already set to a different config:"
+    echo "  current: $existing_cmd"
+    echo "  new:     $TARGET_CMD"
+    echo ""
+    printf "Replace with ctxstat? [y/N] "
+    read -r answer </dev/tty
+    if [[ "$answer" =~ ^[Yy]$ ]]; then
+        set_statusline
+    else
+        echo "Skipped. statusLine unchanged."
+    fi
 fi
 
 echo ""
